@@ -1,36 +1,17 @@
 header .navbar {
-    position: absolute;
+    position: fixed;
     width: 100%;
     background-color: transparent;
     z-index: 100;
+    transition: all 200ms ease-in-out;
 }
 
-header .navbar .sticky {
-    position: fixed;
-    left: 0;
-    top: 0;
+header .sticky {
+    transition: all 200ms ease-in-out;
     background-color: var(--white);
-    transition: all 15ms  ease-in-out;
-    animation-name: stickyTransition;
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
-    -webkit-animation-duration: 0.5s;
-    animation-fill-mode: both;
-    -webkit-box-shadow: 0 2px 3px rgba(96, 96, 96, 0.1);
-    -moz-box-shadow: 0 2px 3px rgba(96, 96, 96, 0.1);
-    box-shadow: 0 2px 3px rgba(96, 96, 96, 0.1);
-}
-
-@keyframes stickyTransition {
-    0% {
-        opacity: 0;
-        transform: translate3d(1,-100%,0);
-        -webkit-transform: translate3d(1,-100%,0);
-    }
-    100% {
-        opacity: 1;
-        transform: none;
-        -webkit-transform: none;
+    box-shadow: 0px 2px 4px 2px rgba(var(--yellow-rgb), 0.6) ;
+    .nav-link{
+        color: var(--light-black);
     }
 }
 
@@ -56,9 +37,6 @@ header .nav-link {
     -moz-transition: all 15ms ease-in-out;
 }
 
-header .sticky .nav-link{
-    color: var(--light-black);
-}
 
 header .nav-link:hover {
     color: var(--yellow)
@@ -96,6 +74,11 @@ header .roundpoint {
     header .navbar-toggler:focus{
         outline:none;
         box-shadow: none;
+    }
+
+    header .nav-link{
+        color: var(--light-black);
+        padding-top: 10px !important;
     }
 
     header .navbar-toggler-icon {

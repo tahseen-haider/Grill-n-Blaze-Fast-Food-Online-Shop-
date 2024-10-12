@@ -23,6 +23,7 @@
     --light-grey-2: #dddddd;
     --white: #fff;
     --yellow: #f7be27;
+    --yellow-rgb: 190, 190, 190;
     --grey: #757575;
     --brown: #6f5e4d;
     --bg-coffee: #642f21;
@@ -32,6 +33,7 @@ body, html{
     font-size: 1rem;
     font-family: var(--roboto-font);
     font-weight: 300;
+    overflow-x: hidden;
 }
 
 @media (max-width: 992px)

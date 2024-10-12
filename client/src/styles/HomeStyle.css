@@ -10,7 +10,7 @@
     background-size: cover;
     background-attachment: fixed;
     padding-top: 170px;
-    padding-bottom: 90px;
+    padding-bottom: 99px;
 }
 
 .hero-section .price-badge {
@@ -57,4 +57,17 @@
     line-height: 1;
     margin-bottom: 20px;
     letter-spacing: 3px;
+}
+
+.hero-section .hero-text p{
+    padding: 0 5%;
+}
+
+/* Media Query Mobile */
+
+@media (max-width: 767px) {
+    /* Home Hero 1.0 */
+    .hero-section  .hero-text h1{
+        font-size: 5.5rem;
+    }
 }
