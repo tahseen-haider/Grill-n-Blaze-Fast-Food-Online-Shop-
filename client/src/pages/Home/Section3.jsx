@@ -79,18 +79,39 @@ const products = [
     // Add more mock data objects as needed
 ];
 
+const renderRatingIcons = (rating) => {
+  const starsHTML = [];
+
+  for(let i=0; i<5; i++)
+  {
+    if(rating>0.5)
+    {
+      starsHTML.push(<i className="bi bi-star-fill"></i>)
+    }
+    else if (rating>0 && rating<1)
+    {
+      starsHTML.push(<i className="bi bi-star-half"></i>)
+    }
+    else {
+      starsHTML.push(<i className="bi bi-star"></i>)
+    }
+    rating--;
+  }
+
+  return starsHTML;
+}
+
+
 export default function Section3() {
   return (
     <>
         <section className="menu-section">
             <Container>
                 <Row>
-                    <Col lg={{span:8, offset:2}}>
-                        <h2>Nothing brings people together like a good burger</h2>
-                        <p>Semper lacus cursus porta primis ligula risus tempus and
-                sagittis ipsum mauris lectus laoreet purus ipsum tempor enim
-                ipsum porta justo integer ultrice aligula lectus aenean magna
-                and pulvinar purus at pretium gravida</p>
+                    <Col lg={{span:8, offset:2}} className="text-center mb-5">
+                        <h2>OUR CRAZY BURGERS</h2>
+                        <p className="para">Semper lacus cursus porta primis ligula risus tempus and
+                sagittis ipsum mauris lectus laoreet </p>
                     </Col>
                 </Row>
                 <Row>
@@ -102,7 +123,7 @@ export default function Section3() {
                         title={item.title}
                         paragraph={item.paragraph}
                         price={item.price}
-                        // ratingIcons = {ratingIcon}
+                        renderRatingIcons = {renderRatingIcons}
                       />
                     }
                     )}

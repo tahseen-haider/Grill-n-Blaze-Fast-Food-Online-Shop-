@@ -1,123 +1,241 @@
 /* Home Hero 1.0 */
 
-.btn{
-    position: relative;
+.btn {
+  position: relative;
 }
 
-.hero-section{
-    position: relative;
-    background: url("../assets/hero/hero-1.jpg") no-repeat center center;
-    background-size: cover;
-    background-attachment: fixed;
-    padding-top: 170px;
-    padding-bottom: 99px;
+.hero-section {
+  position: relative;
+  background: url("../assets/hero/hero-1.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 170px;
+  padding-bottom: 99px;
 }
 
 .hero-section .price-badge {
-    background: url("../assets/hero/price-badge-yellow.png") no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    top: -20px;
-    right: 5px;
-    width: 180px;
-    height: 176px;
-    text-align: center;
+  background: url("../assets/hero/price-badge-yellow.png") no-repeat center
+    center;
+  background-size: cover;
+  position: absolute;
+  top: -20px;
+  right: 5px;
+  width: 180px;
+  height: 176px;
+  text-align: center;
 }
 
 .hero-section .badge-text {
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .hero-section .h4_xs {
-    font-size: 1.875rem;
-    font-weight: 600;
-    line-height: 1;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .hero-section .h3_lg {
-    font-size: 2.875rem;
-    font-weight: 600;
-    line-height: 1;
+  font-size: 2.875rem;
+  font-weight: 600;
+  line-height: 1;
 }
 
-.hero-section .hero-text h1{
-    font-family: var(--lilita-font);
-    font-size: 7rem;
-    line-height: 1;
-    margin-bottom: 15px;
-    letter-spacing: 3px;
+.hero-section .hero-text h1 {
+  font-family: var(--lilita-font);
+  font-size: 7rem;
+  line-height: 1;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
 }
 
-.hero-section .hero-text h2{
-    font-family: var(--lilita-font);
-    font-size: 2.5rem;
-    line-height: 1;
-    margin-bottom: 20px;
-    letter-spacing: 3px;
+.hero-section .hero-text h2 {
+  font-family: var(--lilita-font);
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
 }
 
-.hero-section .hero-text p{
-    padding: 0 5%;
+.hero-section .hero-text p {
+  padding: 0 5%;
 }
 
 /* Home About 2.0 */
 
 .about-section {
-    padding-top: 80px;
-    padding-bottom: 300px;
-    background: url('../assets/about/about-1.jpg') no-repeat center center;
-    background-size: cover;
-    width: 100%;
+  padding-top: 80px;
+  padding-bottom: 300px;
+  background: url("../assets/about/about-1.jpg") no-repeat center center;
+  background-size: cover;
+  width: 100%;
 }
 
 .about-section h2 {
-    font-size: 3.5rem;
+  font-size: 3.5rem;
 }
 
 .about-section p {
-    color: var(--grey);
-    padding: 20px 30px;
-    font-size: 19px;
+  color: var(--grey);
+  padding: 20px 30px;
+  font-size: 19px;
 }
 
 .about-wrapper {
-    background: var(--yellow);
-    padding: 70px 0 30px;
+  background: var(--yellow);
+  padding: 70px 0 30px;
 }
 
 .about-box .about-icon img {
-    max-width: 25%;
+  max-width: 25%;
 }
 
-.about-box h4{
-    font-size: 26px;
-    line-height: 1;
-    letter-spacing: 0.5008px;
-    margin: 30px 0 20px;
+.about-box h4 {
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.5008px;
+  margin: 30px 0 20px;
 }
 
 /* Home Section 3.0 */
 
+.menu-section {
+  padding: 100px 0 100px;
+}
+
+.menu-section .card {
+    margin-bottom: 1rem;
+}
+
+.menu-section .card-img-top {
+  transition: all 500ms ease-in-out;
+}
+
+.menu-section h2 {
+  font-size: 3.5rem;
+  color: var(--light-red);
+}
+
+.menu-section .para {
+    color: var(--grey);
+    padding: 10px 100px;
+    font-size: 19px;
+}
+
+.menu-section .item-rating i {
+    color: var(--yellow);
+    padding-right: 5px;
+}
+
+.menu-section .wishlist i {
+    color: var(--grey);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.menu-section .wishlist i:hover {
+    color: var(--light-red);
+}
+
+.menu-section .card-title {
+    font-family: var(--oswald-font);
+    font-weight: 600;
+    margin: 5px 0 10px;
+}
+
+.menu-section .card-text {
+    color: var(--grey);
+    font-size: 15px;
+}
+
+.menu-section .menu-price {
+    background-color: var(--bg-coffee);
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 4px;
+    color: var(--yellow);
+    font-size: 1rem;
+}
+
+.menu-section .add-to-cart a {
+    background: var(--yellow);
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 500ms ease-in-out;
+}
+
+.menu-section .card:hover {
+    a {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .card-img-top{
+        transform: scale(1.1);
+    }
+}
+
+.menu-section .ads-box {
+    text-align: right;
+    padding: 80px 35px 50px;
+    border-radius: 6px;
+}
+
+.menu-section .ads-img1 {
+    background: url('../assets/menu/ads-1.jpg');
+    background-size: cover;
+}
+.menu-section .ads-img2 {
+    background: url('../assets/menu/ads-2.jpg');
+    background-size: cover;
+}
+
+.menu-section .ads-box h4{
+    font-size: 2.25rem;
+    font-weight: 300;
+    color: var(--brown);
+}
+
+.menu-section .ads-box h5{
+    font-size: 2.375rem;
+    color: var(--brown);
+}
+
+.menu-section .ads-box a{
+    font-size: 18px;
+    margin-top: 15px;
+}
 
 
 /* Media Query Mobile */
 
 @media (max-width: 992px) {
-    .about-section h2 {
-        font-size: 2.5rem;
-    }
+  .about-section h2 {
+    font-size: 2.5rem;
+  }
 
-    .about-section p {
-        padding: 20px 0;
-    }
+  .about-section p {
+    padding: 20px 0;
+  }
 }
 
 @media (max-width: 767px) {
-    /* Home Hero 1.0 */
-    .hero-section  .hero-text h1{
-        font-size: 5.5rem;
-    }
+  /* Home Hero 1.0 */
+  .hero-section .hero-text h1 {
+    font-size: 5.5rem;
+  }
+
+  /* Home Menu 1.0 */
+  .menu-section .para {
+    padding: 10px 0;
+  }
 }

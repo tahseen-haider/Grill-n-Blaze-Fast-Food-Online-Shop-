@@ -1,7 +1,7 @@
 import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function Cards({image, rating, title, paragraph, price}) {
+export default function Cards({image, rating, title, paragraph, price,renderRatingIcons}) {
 
   return (
     <Col sm={6} lg={4} xl={3}>
@@ -11,7 +11,9 @@ export default function Cards({image, rating, title, paragraph, price}) {
             </div>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between">
-                    <div className="item-rating">{rating}</div>
+                    <div className="item-rating">
+                        {renderRatingIcons(rating)}
+                    </div>
                     <div className="wishlist">
                         <i className="bi bi-bookmark-heart"></i>
                     </div>
@@ -25,7 +27,7 @@ export default function Cards({image, rating, title, paragraph, price}) {
                         <h5 className="mb-0">{price}/-</h5>
                     </div>
                     <div className="add-to-cart">
-                        <Link to="/">
+                        <Link to="/" >
                             <i className="bi bi-bag me-2"></i>
                             Add To Cart
                         </Link>
