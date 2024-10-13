@@ -24,9 +24,7 @@ export default function Section1() {
               <h1 className="text-white">New Burger</h1>
               <h2 className="text-white">With Onion</h2>
               <p className="text-white pt-2 pb-4">
-                Feugiat primis ligula risus auctor laoreet augue egestas mauris
-                viverra tortor in iaculis pretium at magna mauris ipsum primis
-                rhoncus feugiat
+              Savor the juiciest burger, grilled to perfection and topped with fresh lettuce, ripe tomatoes, melted cheese, and our signature smoky sauce. Served hot with crispy fries—get yours now and taste the flavor explosion!
               </p>
               <Link to="/" className="btn order_now">
                 Order Now
