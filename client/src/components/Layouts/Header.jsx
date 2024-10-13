@@ -10,7 +10,6 @@ export default function Header() {
   const changeValueOnScroll = () => {
     const scrollValue = document.documentElement.scrollTop;
     scrollValue > 100 ? setNav(true) : setNav(false);
-    console.log(scrollValue)
   };
 
   window.addEventListener("scroll", changeValueOnScroll);
