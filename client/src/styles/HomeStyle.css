@@ -246,6 +246,62 @@
   height: 100vh;
 }
 
+/* Home Shop 6.0 */
+
+.shop-section {
+  padding: 100px 0 0;
+  background: var(--yellow);
+}
+
+
+.shop-section h4{
+  font-size: 2.375rem;
+  font-weight: 400;
+  color: var(--bg-coffee);
+}
+
+.shop-section h2{
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--bg-coffee);
+}
+
+.shop-section p {
+  font-size: 1.125rem;
+  padding-right: 10%;
+  color: var(--bg-coffee);
+  margin-bottom: 40px;
+}
+
+.shop-section .store {
+  max-width: 40%;
+}
+
+.shop-section .e-shop {
+  text-align: center;
+}
+
+.brand-section {
+  padding: 70px 0 40px;
+  background: var(--light-grey);
+  overflow: hidden;
+}
+
+.brand-section .brand-img{
+  width: 180px;
+  height: auto;
+}
+
+.carousel.slide .carousel-inner {
+  overflow: unset;
+}
+
+.carousel.slide .carousel-inner .carousel-caption {
+  position: relative;
+  right: unset;
+  left: unset;
+}
 
 /* Media Query Mobile */
 
@@ -269,10 +325,6 @@
     opacity: 1;
   }
 
-  /* .bg-parralax-scroll{
-    background-attachment:scroll;
-    height: 500px;
-  } */
 }
 
 @media (max-width: 767px) {
