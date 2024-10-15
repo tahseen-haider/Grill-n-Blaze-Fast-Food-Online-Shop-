@@ -1,4 +1,4 @@
-// import Footer from "./Footer";
+import Footer from "./Footer";
 import Header from "./Header";
 
 export default function Layout({children}) {
@@ -6,7 +6,7 @@ export default function Layout({children}) {
     <>
       <Header/>
       <div>{children}</div>
-      {/* <Footer/> */}
+      <Footer/>
     </>
   )
 }
