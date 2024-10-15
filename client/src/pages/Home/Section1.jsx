@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export default function Section1() {
   return (
-    <section className="hero-section">
+    <section id="hero" className="hero-section">
         <Container>
         <Row>
           <Col lg={7} className="mb-5 mb-lg-0">

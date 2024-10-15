@@ -16,7 +16,7 @@ export default function Section6() {
                   <div className="user-img">
                     <img src={user1} alt="user" className="img-fluid"/>
                   </div>
-                  <p>The burger was a delightful experience! The juicy patty was perfectly cooked, bursting with flavor, and seasoned just right. Topped with fresh lettuce, ripe tomatoes, and creamy mayonnaise, each bite was incredibly satisfying. The toasted bun added a nice crunch and held everything together well. Overall, it's a delicious choice for any burger lover—definitely a must-try!</p>
+                  <p>The burger was a delightful experience! The juicy patty was perfectly cooked, bursting with flavor, and seasoned just right. Topped with fresh lettuce, ripe tomatoes, and creamy mayonnaise, each bite was incredibly satisfying.</p>
                   <div className="items-rating mb-2">
                     <i className="bi bi-star-fill"></i>
                     <i className="bi bi-star-fill"></i>

@@ -28,27 +28,27 @@ export default function Header() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link as={Link} to="/">
+              <a href="#hero" className="nav-link">
                 Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/about">
+              </a>
+              <a href="#about" className="nav-link">
                 About
-              </Nav.Link>
-              <Nav.Link as={Link} to="/menu">
+              </a>
+              <a href="#menu" className="nav-link">
                 Menu
-              </Nav.Link>
-              <Nav.Link as={Link} to="/blog">
+              </a>
+              <a href="#blog" className="nav-link">
                 Blog
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contact">
+              </a>
+              <a href="#contact" className="nav-link">
                 Contact
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contact">
+              </a>
+              <a to="/" className="nav-link">
                 <div className="cart">
                   <i className="bi bi-cart2"></i>
                   <em className="roundpoint">2</em>
                 </div>
-              </Nav.Link>
+              </a>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -4,7 +4,7 @@ import PromoImg from '../../assets/promotion/pro.png'
 export default function Section4() {
   return (
     <>
-      <section className="promotion-section">
+      <section id="blog" className="promotion-section">
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="text-center mb-5 mb-lg-0">

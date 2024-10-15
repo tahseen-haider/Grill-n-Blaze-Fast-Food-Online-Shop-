@@ -86,3 +86,11 @@ header .roundpoint {
         height: 2.5rem;
     }
 }
+
+@media (max-width:992px) {
+    header .logo img {
+        width: auto;
+        max-width: inherit;
+        max-height: 50px;
+    }
+}

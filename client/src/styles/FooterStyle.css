@@ -1,0 +1,75 @@
+footer {
+    padding: 80px 0 0;
+}
+
+footer h5 {
+    color: var(--light-black);
+    line-height: 1;
+    margin-bottom: 25px;
+}
+
+footer p {
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+footer .calling {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--yellow);
+}
+
+footer ul li {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+footer .copy-right {
+    border-top: 1px solid var(--light-grey-2);
+    margin-top: 60px;
+    padding: 20px 0;
+}
+
+footer .copy-right ul li span {
+    color: var(--light-red);
+    font-weight: 600;
+}
+
+footer .copy-right ul li {
+    font-size: 1rem;
+    padding: 0 10px;
+    position: relative;
+}
+
+footer .copy-right ul li::after {
+    content: "|";
+    padding-left: 11px;
+    position: absolute;
+    top: -1px;
+    right: -10px;
+}
+
+footer .copy-right ul li:last-child::after {
+    display: none;
+}
+
+.scroll-top {
+    background-color: var(--light-red);
+    display: inline-block;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    font-size: 2rem;
+    padding: 0 10px;
+    color: white;
+    border-radius: 8px;
+    z-index: 100;
+    box-shadow: 0px 2px 5px 1px rgb(95, 95, 95);
+    cursor: pointer;
+}
+
+.scroll-top:active{
+    box-shadow: 0px 0px 2px 1px rgb(95, 95, 95);
+}
