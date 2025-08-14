@@ -14,7 +14,7 @@ export default function Section7() {
                 Our fast food service ensures that your favorite meals arrive
                 fresh and hot within 30 minutes. We prioritize speed and quality
                 to give you the best dining experience right at your doorstep.
-                Whether it's a quick snack or a hearty meal, we've got you
+                Whether it&apos;s a quick snack or a hearty meal, we&apos;ve got you
                 covered, anytime, anywhere!
               </p>
               <Link to="/" className="btn btn_red px-4 py-2 rounded-0">

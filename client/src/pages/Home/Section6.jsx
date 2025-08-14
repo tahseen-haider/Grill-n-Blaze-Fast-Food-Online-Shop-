@@ -1,8 +1,8 @@
 import { Carousel, Container, Row } from "react-bootstrap";
-import user1 from '../../assets/blog/AR.jpg'
-import user2 from '../../assets/blog/Pasha.jpg'
-import user3 from '../../assets/blog/Arman.jpg'
-import user4 from '../../assets/blog/Talha.jpg'
+import user1 from '/assets/blog/AR.jpg'
+import user2 from '/assets/blog/Pasha.jpg'
+import user3 from '/assets/blog/Arman.jpg'
+import user4 from '/assets/blog/Talha.jpg'
 
 export default function Section6() {
   return (

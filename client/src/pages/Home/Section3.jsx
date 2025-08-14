@@ -1,13 +1,13 @@
 import { Container, Row, Col } from "react-bootstrap";
 
-import Image1 from "../../assets/menu/burger-11.jpg";
-import Image2 from "../../assets/menu/burger-12.jpg";
-import Image3 from "../../assets/menu/burger-13.jpg";
-import Image4 from "../../assets/menu/burger-14.jpg";
-import Image5 from "../../assets/menu/burger-15.jpg";
-import Image6 from "../../assets/menu/burger-16.jpg";
-import Image7 from "../../assets/menu/burger-17.jpg";
-import Image8 from "../../assets/menu/burger-18.jpg";
+import Image1 from "/assets/menu/burger-11.jpg";
+import Image2 from "/assets/menu/burger-12.jpg";
+import Image3 from "/assets/menu/burger-13.jpg";
+import Image4 from "/assets/menu/burger-14.jpg";
+import Image5 from "/assets/menu/burger-15.jpg";
+import Image6 from "/assets/menu/burger-16.jpg";
+import Image7 from "/assets/menu/burger-17.jpg";
+import Image8 from "/assets/menu/burger-18.jpg";
 import Cards from "../../components/Layouts/Cards";
 import { Link } from "react-router-dom";
 

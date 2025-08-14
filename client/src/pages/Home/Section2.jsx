@@ -1,8 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Pizza from '../../assets/about/pizza.png'
-import Salad from '../../assets/about/salad.png'
-import Delivery from '../../assets/about/delivery-bike.png'
+import Pizza from '/assets/about/pizza.png'
+import Salad from '/assets/about/salad.png'
+import Delivery from '/assets/about/delivery-bike.png'
 
 const mockData = [
   {

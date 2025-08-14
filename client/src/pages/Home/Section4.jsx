@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import PromoImg from '../../assets/promotion/pro.png'
+import PromoImg from '/assets/promotion/pro.png'
 
 export default function Section4() {
   return (
