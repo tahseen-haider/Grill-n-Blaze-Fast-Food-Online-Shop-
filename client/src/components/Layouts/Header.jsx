@@ -15,6 +15,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", changeValueOnScroll);
   }, []);
 
+  const ProfileElement = () => {
+    return <div className=""></div>;
+  };
   return (
     <header>
       <Navbar
@@ -27,11 +30,15 @@ export default function Header() {
           <img src={logo} alt="Logo" className="img-fluid" />
         </Link>
 
-        {/* RIGHT SIDE (Mobile) - Cart + Toggler */}
+        {/* RIGHT SIDE (Mobile) */}
         <div className="d-flex align-items-center d-lg-none ms-auto gap-3">
-          <div className="cart me-2">
-            <i className="bi bi-cart2"></i>
-            <em className="roundpoint">2</em>
+          <div className="me-2 d-flex gap-3">
+            {/* Profile */}
+            <ProfileElement />
+            <div className="cart">
+              <i className="bi bi-cart2" />
+              <em className="roundpoint">2</em>
+            </div>
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         </div>
@@ -39,17 +46,32 @@ export default function Header() {
         {/* CENTER (Desktop) */}
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mx-auto text-center">
-            <a href="#hero" className="nav-link">Home</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#menu" className="nav-link">Menu</a>
-            <a href="#blog" className="nav-link">Blog</a>
-            <a href="#contact" className="nav-link">Contact</a>
+            <a href="#hero" className="nav-link">
+              Home
+            </a>
+            <a href="#about" className="nav-link">
+              About
+            </a>
+            <a href="#menu" className="nav-link">
+              Menu
+            </a>
+            <a href="#blog" className="nav-link">
+              Blog
+            </a>
+            <a href="#contact" className="nav-link">
+              Contact
+            </a>
           </Nav>
 
-          {/* Cart for Desktop */}
-          <div className="cart d-none d-lg-flex ms-lg-3">
-            <i className="bi bi-cart2"></i>
-            <em className="roundpoint">2</em>
+          {/* For Desktop */}
+          <div className="d-none d-lg-flex ms-lg-3 gap-4">
+            {/* Profile */}
+            <ProfileElement />
+            {/* Cart */}
+            <div className="cart">
+              <i className="bi bi-cart2" />
+              <em className="roundpoint">2</em>
+            </div>
           </div>
         </Navbar.Collapse>
       </Navbar>
