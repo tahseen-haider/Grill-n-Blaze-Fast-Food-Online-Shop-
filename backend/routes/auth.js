@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       // secure: true, // enable for HTTPS
       sameSite: "lax",
-      maxAge: 1000 * 60 * 60 // 1 hour
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
     return res.json({ msg: "Logged in" });

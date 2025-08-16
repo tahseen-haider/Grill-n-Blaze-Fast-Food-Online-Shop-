@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "/assets/logo/logo.png";
 import "../../styles/HeaderStyle.css";
 import { useState, useEffect } from "react";
+import ProfileHeaderButton from "./ProfileHeaderButton";
 
 export default function Header() {
   const [nav, setNav] = useState(false);
@@ -15,9 +16,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", changeValueOnScroll);
   }, []);
 
-  const ProfileElement = () => {
-    return <div className=""></div>;
-  };
   return (
     <header>
       <Navbar
@@ -34,7 +32,7 @@ export default function Header() {
         <div className="d-flex align-items-center d-lg-none ms-auto gap-3">
           <div className="me-2 d-flex gap-3">
             {/* Profile */}
-            <ProfileElement />
+            <ProfileHeaderButton />
             <div className="cart">
               <i className="bi bi-cart2" />
               <em className="roundpoint">2</em>
@@ -66,7 +64,7 @@ export default function Header() {
           {/* For Desktop */}
           <div className="d-none d-lg-flex ms-lg-3 gap-4">
             {/* Profile */}
-            <ProfileElement />
+            <ProfileHeaderButton />
             {/* Cart */}
             <div className="cart">
               <i className="bi bi-cart2" />

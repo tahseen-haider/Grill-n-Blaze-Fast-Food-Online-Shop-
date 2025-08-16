@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
 
   // OAuth ids
   googleId: { type: String, index: true, sparse: true },
-  facebookId: { type: String, index: true, sparse: true },
 
   profilePic: { type: String },
 

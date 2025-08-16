@@ -1,7 +1,6 @@
 // config/passport.js
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("../models/User");
 
 // serialize/deserialize required for passport session
@@ -24,8 +23,8 @@ passport.deserializeUser(async (id, done) => {
  * - Else if a user with same email exists -> link provider to that user.
  * - Else create a new user with provider info.
  */
-async function handleOAuth(profile, provider) {
-  const providerIdField = provider === "google" ? "googleId" : "facebookId";
+async function handleOAuth(profile) {
+  const providerIdField = "googleId";
   const providerId = profile.id;
   const email = profile.emails?.[0]?.value || null;
   const name = profile.displayName || "";
@@ -66,22 +65,7 @@ passport.use(new GoogleStrategy({
   callbackURL: `${process.env.SERVER_URL}/api/oauth/google/callback`
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    const user = await handleOAuth(profile, "google");
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-}));
-
-// Facebook Strategy
-passport.use(new FacebookStrategy({
-  clientID: process.env.FB_CLIENT_ID,
-  clientSecret: process.env.FB_CLIENT_SECRET,
-  callbackURL: `${process.env.SERVER_URL}/api/oauth/facebook/callback`,
-  profileFields: ["id", "displayName", "emails", "photos"]
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const user = await handleOAuth(profile, "facebook");
+    const user = await handleOAuth(profile);
     done(null, user);
   } catch (err) {
     done(err, null);

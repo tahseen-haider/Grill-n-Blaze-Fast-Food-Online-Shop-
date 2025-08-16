@@ -112,3 +112,15 @@ a {
     background: transparent;
     border-color: var(--light-red);
 }
+
+.btn_yellow{
+    color: var(--light-black);
+    background: var(--yellow);
+    border-color: var(--yellow);
+}
+.btn_yellow:hover,
+.btn_yellow:focus{
+    color: var(--light-black);
+    background: transparent;
+    border-color: var(--light-black);
+}

@@ -1,6 +1,7 @@
 import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 export default function Cards({image, rating, title, paragraph, price,renderRatingIcons}) {
 
   return (
