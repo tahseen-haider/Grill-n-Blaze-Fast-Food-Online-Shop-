@@ -84,11 +84,11 @@ const renderRatingIcons = (rating) => {
 
   for (let i = 0; i < 5; i++) {
     if (rating > 0.5) {
-      starsHTML.push(<i className="bi bi-star-fill"></i>);
+      starsHTML.push(<i key={i} className="bi bi-star-fill"></i>);
     } else if (rating > 0 && rating < 1) {
-      starsHTML.push(<i className="bi bi-star-half"></i>);
+      starsHTML.push(<i key={i} className="bi bi-star-half"></i>);
     } else {
-      starsHTML.push(<i className="bi bi-star"></i>);
+      starsHTML.push(<i key={i} className="bi bi-star"></i>);
     }
     rating--;
   }

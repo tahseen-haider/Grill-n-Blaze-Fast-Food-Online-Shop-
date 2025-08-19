@@ -1,9 +1,9 @@
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "/assets/logo/logo.png";
-import "../../styles/HeaderStyle.css";
+import "../../../styles/HeaderStyle.css";
 import { useState, useEffect } from "react";
-import ProfileHeaderButton from "./ProfileHeaderButton";
+import ProfileHeaderButton from "./AuthNav";
 
 export default function Header() {
   const [nav, setNav] = useState(false);
@@ -62,7 +62,7 @@ export default function Header() {
           </Nav>
 
           {/* For Desktop */}
-          <div className="d-none d-lg-flex ms-lg-3 gap-4">
+          <div className="d-none d-lg-flex ms-lg-3 gap-4 align-items-center justify-content-center">
             {/* Profile */}
             <ProfileHeaderButton />
             {/* Cart */}

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Footer from "./Footer";
-import Header from "./Header";
-import "../../styles/HomeStyle.css"
+import "../../styles/HeaderStyle.css"
+import Header from './navbar/Header';
 
 export default function Layout({ children }) {
   return (

@@ -42,11 +42,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/oauth", require("./routes/oauth"));
-
-// Health
-app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.use("/api/auth", require("./routes/auth.route"));
+app.use("/api/oauth", require("./routes/oauth.route"));
+app.use("/api/user", require("./routes/user.route"))
 
 const PORT = process.env.PORT || 5000;
 // Connect DB

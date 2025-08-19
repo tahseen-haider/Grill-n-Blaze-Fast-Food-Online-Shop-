@@ -19,13 +19,19 @@ const createToken = (userId, expiresIn = "1h") => {
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ msg: "Email and password required" });
+    if (!email || !password)
+      return res.status(400).json({ msg: "Email and password required" });
 
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ msg: "User already exists" });
 
     const hashed = await bcrypt.hash(password, 10);
-    user = await User.create({ name, email, password: hashed, isVerified: false });
+    user = await User.create({
+      name,
+      email,
+      password: hashed,
+      isVerified: false,
+    });
 
     // create verification token (short-lived)
     const token = createToken(user._id, "1d");
@@ -36,10 +42,12 @@ router.post("/register", async (req, res) => {
       subject: "Verify your email",
       html: `<p>Hello ${name || ""},</p>
              <p>Click <a href="${url}">here</a> to verify your email.</p>
-             <p>If you didn't request this, ignore.</p>`
+             <p>If you didn't request this, ignore.</p>`,
     });
 
-    return res.json({ msg: "Registered. Please check your email to verify your account." });
+    return res.json({
+      msg: "Registered. Please check your email to verify your account.",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Server error" });
@@ -66,15 +74,18 @@ router.get("/verify-email/:token", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ msg: "Email and password required" });
+    if (!email || !password)
+      return res.status(400).json({ msg: "Email and password required" });
 
     const user = await User.findOne({ email });
-    if (!user || !user.password) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!user || !user.password)
+      return res.status(400).json({ msg: "Invalid credentials" });
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ msg: "Invalid credentials" });
 
-    if (!user.isVerified) return res.status(403).json({ msg: "Please verify your email first" });
+    if (!user.isVerified)
+      return res.status(403).json({ msg: "Please verify your email first" });
 
     const token = createToken(user._id, "1h");
 
@@ -83,7 +94,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       // secure: true, // enable for HTTPS
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     return res.json({ msg: "Logged in" });
@@ -97,8 +108,13 @@ router.post("/login", async (req, res) => {
  * Logout: clear cookie
  */
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.json({ msg: "Logged out" });
+  console.log("logging out")
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+  res.status(200).json({ msg: "Logged out" });
 });
 
 /**
@@ -110,11 +126,17 @@ router.post("/forgot-password", async (req, res) => {
     if (!email) return res.status(400).json({ msg: "Email required" });
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(200).json({ msg: "If that email exists, a reset email has been sent." });
+    if (!user)
+      return res
+        .status(200)
+        .json({ msg: "If that email exists, a reset email has been sent." });
 
     // Create a token and store hashed token in DB for extra safety
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
     user.resetToken = hashedToken;
     user.resetTokenExpire = Date.now() + 1000 * 60 * 60; // 1 hour
@@ -125,10 +147,12 @@ router.post("/forgot-password", async (req, res) => {
     await sendEmail({
       to: user.email,
       subject: "Password reset",
-      html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 1 hour.</p>`
+      html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 1 hour.</p>`,
     });
 
-    return res.json({ msg: "If that email exists, a reset email has been sent." });
+    return res.json({
+      msg: "If that email exists, a reset email has been sent.",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Server error" });
@@ -141,14 +165,15 @@ router.post("/forgot-password", async (req, res) => {
 router.post("/reset-password", async (req, res) => {
   try {
     const { token, id, newPassword } = req.body;
-    if (!token || !id || !newPassword) return res.status(400).json({ msg: "Invalid request" });
+    if (!token || !id || !newPassword)
+      return res.status(400).json({ msg: "Invalid request" });
 
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     const user = await User.findOne({
       _id: id,
       resetToken: hashedToken,
-      resetTokenExpire: { $gt: Date.now() }
+      resetTokenExpire: { $gt: Date.now() },
     });
 
     if (!user) return res.status(400).json({ msg: "Invalid or expired token" });
@@ -170,7 +195,9 @@ router.post("/reset-password", async (req, res) => {
  */
 const authMiddleware = require("../middleware/authMiddleware");
 router.get("/me", authMiddleware, async (req, res) => {
-  const user = await User.findById(req.user.id).select("-password -resetToken -resetTokenExpire");
+  const user = await User.findById(req.user.id).select(
+    "-password -resetToken -resetTokenExpire"
+  );
   res.json({ user });
 });
 
