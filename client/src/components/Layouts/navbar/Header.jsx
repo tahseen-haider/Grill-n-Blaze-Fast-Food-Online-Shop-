@@ -30,7 +30,7 @@ export default function Header() {
 
         {/* RIGHT SIDE (Mobile) */}
         <div className="d-flex align-items-center d-lg-none ms-auto gap-3">
-          <div className="me-2 d-flex gap-3">
+          <div className="me-2 d-flex gap-3 justify-content-center align-items-center">
             {/* Profile */}
             <ProfileHeaderButton />
             <div className="cart">
