@@ -15,7 +15,7 @@ router.get("/google/callback",
     // req.user is available
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-    // Option B (alternative): set cookie and redirect without token in query:
+    // set cookie and redirect without token in query:
     res.cookie("token", token, { httpOnly: true, sameSite: 'lax', maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.redirect(process.env.CLIENT_URL);
   }

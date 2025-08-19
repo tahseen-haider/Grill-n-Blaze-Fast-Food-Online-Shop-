@@ -12,7 +12,6 @@ export default function ProfileHeaderButton() {
       const res = await fetch(`${API_URL}/api/user/profile`, {
         credentials: "include",
       });
-      // console.log(res)
       if (res.ok) {
         setIsLoggedIn(true);
       } else {

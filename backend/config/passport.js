@@ -52,24 +52,29 @@ async function handleOAuth(profile) {
     email,
     profilePic: photo,
     isVerified: true,
-    [providerIdField]: providerId
+    [providerIdField]: providerId,
   });
 
   return user;
 }
 
 // Google Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: `${process.env.SERVER_URL}/api/oauth/google/callback`
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const user = await handleOAuth(profile);
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
-}));
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: `${process.env.SERVER_URL}/api/oauth/google/callback`,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const user = await handleOAuth(profile);
+        done(null, user);
+      } catch (err) {
+        done(err, null);
+      }
+    }
+  )
+);
 
 module.exports = passport;

@@ -8,7 +8,7 @@ export default function LoginSignup() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -43,8 +43,12 @@ export default function LoginSignup() {
         body: JSON.stringify(
           isLogin
             ? { email: formData.email, password: formData.password }
-            : { name: formData.name, email: formData.email, password: formData.password }
-        )
+            : {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+              }
+        ),
       });
 
       const data = await res.json();
@@ -65,7 +69,18 @@ export default function LoginSignup() {
     <div className="auth-container">
       <div className="auth-box">
         <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-        {message && <p style={{ color: "red", textAlign: "center" }}>{message}</p>}
+        {/* OAuth */}
+        <a
+          href={`${import.meta.env.VITE_SERVER_URL}/api/oauth/google`}
+          className="oauth btn btn-primary oauth-btn d-flex justify-content-center align-items-center gap-2"
+        >
+          Login With
+          <img src="/icons/google.svg" width={30} height={30} alt="Google" />
+        </a>
+
+        {message && (
+          <p style={{ color: "red", textAlign: "center" }}>{message}</p>
+        )}
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="form-group">
