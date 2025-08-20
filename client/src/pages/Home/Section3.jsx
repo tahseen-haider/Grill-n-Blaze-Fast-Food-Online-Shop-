@@ -116,6 +116,7 @@ export default function Section3() {
               return (
                 <Cards
                   key={index}
+                  id={item.id}
                   image={item.image}
                   rating={item.rating}
                   title={item.title}

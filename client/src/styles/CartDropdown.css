@@ -1,0 +1,10 @@
+.cart-dropdown {
+  .dropdown-menu {
+    margin-top: 10px;
+    min-width: 300px;
+    button {
+      max-width: 100px;
+      margin: 0 auto;
+    }
+  }
+}

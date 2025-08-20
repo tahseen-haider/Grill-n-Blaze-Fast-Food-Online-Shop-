@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import Home from "./pages/Home/Home";
 import LoginSignup from "./components/auth/LoginSignup";
 import ForgotPassword from "./components/auth/ForgotPassword";
@@ -6,11 +9,20 @@ import ResetPassword from "./components/auth/ResetPassword";
 import EmailVerify from "./components/auth/EmailVerify";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
+import { fetchCartItems } from "./store/cartItemsSlice";
+
 function App() {
+  const dispatch = useDispatch();
+
+  // Load cart items from backend when app starts
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/verify-email" element={<EmailVerify />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -4,6 +4,7 @@ import logo from "/assets/logo/logo.png";
 import "../../../styles/HeaderStyle.css";
 import { useState, useEffect } from "react";
 import ProfileHeaderButton from "./AuthNav";
+import CartBtn from "./CartDropdown";
 
 export default function Header() {
   const [nav, setNav] = useState(false);
@@ -33,10 +34,7 @@ export default function Header() {
           <div className="me-2 d-flex gap-3 justify-content-center align-items-center">
             {/* Profile */}
             <ProfileHeaderButton />
-            <div className="cart">
-              <i className="bi bi-cart2" />
-              <em className="roundpoint">2</em>
-            </div>
+            <CartBtn/>
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         </div>
@@ -66,10 +64,7 @@ export default function Header() {
             {/* Profile */}
             <ProfileHeaderButton />
             {/* Cart */}
-            <div className="cart">
-              <i className="bi bi-cart2" />
-              <em className="roundpoint">2</em>
-            </div>
+            <CartBtn/>
           </div>
         </Navbar.Collapse>
       </Navbar>
