@@ -1,4 +1,3 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -14,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS: allow credentials for cookie & passport
+// CORS
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -22,7 +21,7 @@ app.use(
   })
 );
 
-// Sessions for passport (store in Mongo so sessions persist)
+// Sessions
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -30,13 +29,12 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     cookie: {
-      // secure: true, // enable with HTTPS
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
 );
 
-// passport setup
+// passport
 const passport = require("./config/passport");
 app.use(passport.initialize());
 app.use(passport.session());
@@ -47,12 +45,15 @@ app.use("/api/oauth", require("./routes/oauth.route"));
 app.use("/api/user", require("./routes/user.route"));
 app.use("/api/cart", require("./routes/cart.route"));
 
-const PORT = process.env.PORT || 5000;
-// Connect DB
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// ✅ Export the app for Vercel
+module.exports = app;
+
+// ✅ Local server start only in development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+    })
+    .catch((err) => console.log(err));
+}
