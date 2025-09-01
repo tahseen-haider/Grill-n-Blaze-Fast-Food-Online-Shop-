@@ -1,20 +1,34 @@
 // models/User.js
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  name: { type: String },
-  email: { type: String, unique: true, sparse: true },
-  password: { type: String }, // hashed password for local auth
-  isVerified: { type: Boolean, default: false },
+const userSchema = new mongoose.Schema(
+  {
+    role: { type: String, default: "user", enum: ["user", "admin"] },
+    name: { type: String, required: true },
+    email: {
+      type: String,
+      unique: true,
+      sparse: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      minlength: 6,
+    },
 
-  // OAuth ids
-  googleId: { type: String, index: true, sparse: true },
+    isVerified: { type: Boolean, default: false },
 
-  profilePic: { type: String },
+    // OAuth ids
+    googleId: { type: String, index: true, sparse: true },
 
-  // reset token for password resets
-  resetToken: String,
-  resetTokenExpire: Date
-}, { timestamps: true });
+    profilePic: { type: String, default: "/images/default-avatar.webp" },
+
+    // reset token for password resets
+    resetToken: String,
+    resetTokenExpire: Date,
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("User", userSchema);

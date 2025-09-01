@@ -8,27 +8,31 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import EmailVerify from "./components/auth/EmailVerify";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Layout from "./components/Layouts/Layout";
 
+import { fetchUserData } from "./store/userSlice";
 import { fetchCartItems } from "./store/cartItemsSlice";
 
 function App() {
   const dispatch = useDispatch();
 
-  // Load cart items from backend when app starts
   useEffect(() => {
-    dispatch(fetchCartItems());
-  }, [dispatch]);
+  dispatch(fetchUserData());
+  dispatch(fetchCartItems());
+}, [dispatch]);
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginSignup />} />
-        <Route path="/verify-email" element={<EmailVerify />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<ProtectedRoute />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginSignup />} />
+          <Route path="/verify-email" element={<EmailVerify />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/dashboard" element={<ProtectedRoute />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

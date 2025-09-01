@@ -4,9 +4,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchCartItems = createAsyncThunk(
   "cartItems/fetchCartItems",
   async () => {
-    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/products/cart`);
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/api/products/cart`,
+      {
+        credentials: "include", // ✅ Important
+      }
+    );
     if (!res.ok) throw new Error("Failed to fetch cart items");
-    return res.json(); // should return an array of items
+    const data = await res.json();
+    return data;
   }
 );
 

@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Card, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/cartItemsSlice";
+import { addToCart, fetchCartItems } from "../../store/cartItemsSlice";
 
 export default function Cards({
   id,
@@ -14,22 +13,41 @@ export default function Cards({
   renderRatingIcons,
 }) {
   const dispatch = useDispatch();
+
   const handleAddToCart = async () => {
-    const item = { id, image, title, price, rating };
+    const item = { id, image, title, price, rating, quantity: 1 };
     dispatch(addToCart(item));
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/api/products/addToCart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-        title,
-        price,
-        rating,
-      }),
-    });
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/cart/addToCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            productId: id,
+            title,
+            price,
+            rating,
+            image,
+            quantity: 1,
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to add item");
+
+      // ✅ Fetch updated cart from backend after successful POST
+      dispatch(fetchCartItems());
+    } catch (error) {
+      console.error(error);
+      // Optional: rollback optimistic update if needed
+    }
   };
+
   return (
     <Col sm={6} lg={4} xl={3}>
       <Card className="overflow-hidden">
@@ -52,10 +70,10 @@ export default function Cards({
               <h5 className="mb-0">{price}/-</h5>
             </div>
             <div className="add-to-cart" onClick={handleAddToCart}>
-              <Link to="/">
+              <button className="btn btn-primary">
                 <i className="bi bi-bag me-2"></i>
                 Add To Cart
-              </Link>
+              </button>
             </div>
           </div>
         </Card.Body>

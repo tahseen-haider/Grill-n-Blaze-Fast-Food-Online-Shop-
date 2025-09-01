@@ -1,31 +1,26 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const CartItem = require("../models/CartItem");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/profile", async (req, res) => {
+/**
+ * Get Logged-in User Info + Cart Items (Protected)
+ */
+router.get("/me", authMiddleware, async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ msg: "Not Authorized!" });
-
-    // Decode JWT
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      return res.status(401).json({ msg: "Invalid or expired token" });
-    }
-
-    // Fetch user from DB
-    const user = await User.findById(decoded.id).select(
-      "-password -resetToken -resetTokenExpire -__v"
-    );
+    const user = await User.findById(req.user.id).select("-password -resetToken -resetTokenExpire");
     if (!user) return res.status(404).json({ msg: "User not found" });
 
-    return res.status(200).json({ user });
+    const cartItems = await CartItem.find({ userId: req.user.id });
+
+    return res.json({
+      user,
+      cartItems,
+    });
   } catch (err) {
-    console.error("❌ Error in /profile:", err);
+    console.error("Get User Error:", err);
     return res.status(500).json({ msg: "Server error" });
   }
 });

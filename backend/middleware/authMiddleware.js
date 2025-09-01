@@ -1,20 +1,43 @@
-// middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
-  // Read token from httpOnly cookie first, then fallback to header
-  const token = req.cookies?.token || (req.headers.authorization && req.headers.authorization.split(" ")[1]);
-
-  if (!token) {
-    return res.status(401).json({ msg: "No token, access denied" });
-  }
-
   try {
+    // Get token from cookie or Authorization header
+    let token = req.cookies?.token;
+
+    if (!token && req.headers.authorization) {
+      const [scheme, credentials] = req.headers.authorization.split(" ");
+      if (scheme === "Bearer" && credentials) {
+        token = credentials;
+      }
+    }
+
+    if (!token) {
+      return res.status(401).json({ msg: "Access denied. No token provided." });
+    }
+
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // contains { id, iat, exp }
+
+    // Attach only essential user info to request
+    req.user = {
+      id: decoded.id,
+      role: decoded.role || "user",
+    };
+
     next();
   } catch (err) {
-    return res.status(401).json({ msg: "Token is not valid" });
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ msg: "Token expired. Please log in again." });
+    }
+    if (err.name === "JsonWebTokenError") {
+      return res
+        .status(401)
+        .json({ msg: "Invalid token. Authentication failed." });
+    }
+    return res.status(500).json({ msg: "Server error during authentication." });
   }
 };
 

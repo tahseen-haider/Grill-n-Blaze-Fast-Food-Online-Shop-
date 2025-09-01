@@ -66,7 +66,7 @@ export default function LoginSignup() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" style={{paddingTop: "100px"}}>
       <div className="auth-box">
         <h2>{isLogin ? "Login" : "Sign Up"}</h2>
         {/* OAuth */}

@@ -9,7 +9,7 @@ export default function ProfileHeaderButton() {
   useEffect(() => {
     (async () => {
       const API_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
-      const res = await fetch(`${API_URL}/api/user/profile`, {
+      const res = await fetch(`${API_URL}/api/user/me`, {
         credentials: "include",
       });
       const data = await res.json();

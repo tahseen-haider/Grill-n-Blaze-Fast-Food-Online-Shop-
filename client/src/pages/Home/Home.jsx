@@ -1,4 +1,3 @@
-import Layout from "../../components/Layouts/Layout";
 import Section1 from "./Section1";
 import Section2 from "./Section2";
 import '../../styles/HomeStyle.css';
@@ -10,7 +9,7 @@ import Section7 from "./Section7";
 
 export default function Home() {
   return (
-    <Layout>
+    <div>
       <Section1/>
       <Section2/>
       <Section3/>
@@ -18,6 +17,6 @@ export default function Home() {
       <Section5/>
       <Section6/>
       <Section7/>
-    </Layout>
+    </div>
   )
 }

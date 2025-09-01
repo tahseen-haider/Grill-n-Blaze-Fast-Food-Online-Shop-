@@ -1,5 +1,5 @@
 import { Navbar, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "/assets/logo/logo.png";
 import "../../../styles/HeaderStyle.css";
 import { useState, useEffect } from "react";
@@ -8,6 +8,8 @@ import CartBtn from "./CartDropdown";
 
 export default function Header() {
   const [nav, setNav] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const changeValueOnScroll = () => {
@@ -16,6 +18,29 @@ export default function Header() {
     window.addEventListener("scroll", changeValueOnScroll);
     return () => window.removeEventListener("scroll", changeValueOnScroll);
   }, []);
+
+  const links = [
+    {
+      title: "HOME",
+      link: "#hero",
+    },
+    {
+      title: "About",
+      link: "#about",
+    },
+    {
+      title: "Menu",
+      link: "#menu",
+    },
+    {
+      title: "Blog",
+      link: "#blog",
+    },
+    {
+      title: "Contact",
+      link: "#contact",
+    },
+  ];
 
   return (
     <header>
@@ -34,7 +59,7 @@ export default function Header() {
           <div className="me-2 d-flex gap-3 justify-content-center align-items-center">
             {/* Profile */}
             <ProfileHeaderButton />
-            <CartBtn/>
+            <CartBtn />
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         </div>
@@ -42,21 +67,12 @@ export default function Header() {
         {/* CENTER (Desktop) */}
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mx-auto text-center">
-            <a href="#hero" className="nav-link">
-              Home
-            </a>
-            <a href="#about" className="nav-link">
-              About
-            </a>
-            <a href="#menu" className="nav-link">
-              Menu
-            </a>
-            <a href="#blog" className="nav-link">
-              Blog
-            </a>
-            <a href="#contact" className="nav-link">
-              Contact
-            </a>
+            {isHomePage &&
+              links.map((ele, i) => (
+                <a key={i} href={ele.link} className="nav-link">
+                  {ele.title}
+                </a>
+              ))}
           </Nav>
 
           {/* For Desktop */}
@@ -64,7 +80,7 @@ export default function Header() {
             {/* Profile */}
             <ProfileHeaderButton />
             {/* Cart */}
-            <CartBtn/>
+            <CartBtn />
           </div>
         </Navbar.Collapse>
       </Navbar>
