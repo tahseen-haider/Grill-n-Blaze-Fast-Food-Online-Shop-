@@ -13,11 +13,14 @@ export default function ResetPassword() {
     e.preventDefault();
     setMsg("");
 
-    const res = await fetch("http://localhost:5000/api/auth/reset-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, id, newPassword: password })
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/api/auth/reset-password`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, id, newPassword: password }),
+      }
+    );
 
     const data = await res.json();
     setMsg(data.msg);

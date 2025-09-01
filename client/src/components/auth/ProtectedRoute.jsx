@@ -5,11 +5,11 @@ export default function ProtectedRoute() {
   const [msg, setMsg] = useState("Loading...");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/auth/me", {
-      credentials: "include"
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/me`, {
+      credentials: "include",
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.user) {
           setUser(data.user);
         } else {

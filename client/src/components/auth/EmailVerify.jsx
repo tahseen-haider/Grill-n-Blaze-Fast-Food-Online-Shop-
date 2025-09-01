@@ -9,7 +9,7 @@ export default function EmailVerify() {
     const token = searchParams.get("token");
     if (!token) return setMsg("Invalid verification link");
 
-    fetch(`http://localhost:5000/api/auth/verify-email/${token}`)
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/verify-email/${token}`)
       .then(res => res.json())
       .then(data => setMsg(data.msg))
       .catch(() => setMsg("Verification failed"));

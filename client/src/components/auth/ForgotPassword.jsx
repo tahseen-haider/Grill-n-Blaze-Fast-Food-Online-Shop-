@@ -8,11 +8,14 @@ export default function ForgotPassword() {
     e.preventDefault();
     setMsg("");
 
-    const res = await fetch("http://localhost:5000/api/auth/forgot-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/api/auth/forgot-password`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }
+    );
 
     const data = await res.json();
     setMsg(data.msg);
