@@ -1,40 +1,30 @@
-import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import ProfileNavBtn from "./ProfileNavBtn";
+import { fetchUserData } from "../../../store/userSlice";
 
 export default function ProfileHeaderButton() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [profile, setProfile] = useState(undefined);
-  const [isMounted, setIsMounted] = useState(false);
+  const dispatch = useDispatch();
+
+  // ✅ Get user and loading state from Redux
+  const { user, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    (async () => {
-      const API_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
-      const res = await fetch(`${API_URL}/api/user/me`, {
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setIsLoggedIn(true);
-        setProfile(data.user)
-      } else {
-        setIsLoggedIn(false);
-        setProfile(undefined);
-      }
-      setIsMounted(true);
-    })();
-  }, []);
+    // Fetch user data from API when component mounts
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
-  if(!isMounted) return <div style={{minWidth:"40px"}}></div>
+  // ✅ While checking session, render placeholder (to avoid flicker)
+  if (loading) return <div style={{ minWidth: "40px" }}></div>;
 
   return (
     <div>
-      {isLoggedIn ? (
-        <ProfileNavBtn profile={profile}/>
+      {user ? (
+        <ProfileNavBtn /> // ProfileNavBtn now reads user from Redux
       ) : (
         <button
           className="btn btn_yellow"
           onClick={() => (window.location.href = "/login")}
-          style={{}}
         >
           Login / Signup
         </button>

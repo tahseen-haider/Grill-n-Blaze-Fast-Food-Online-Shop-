@@ -1,43 +1,51 @@
-// store/userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchUserData = createAsyncThunk("user/fetchUserData", async () => {
-  const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/user/me`, {
-    credentials: "include", // important for cookies
-  });
-  if (!res.ok) throw new Error("Failed to fetch user data");
-  return res.json(); // { user: {...}, cartItems: [...] }
-});
+export const fetchUserData = createAsyncThunk(
+  "user/fetchUserData",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/user/me`, {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) return rejectWithValue(data.message || "Failed to fetch user data");
+      return data.user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
-const initialState = {
-  user: null,
-  status: "idle",
-  error: null,
-};
+export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+  await fetch(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+  return null;
+});
 
 const userSlice = createSlice({
   name: "user",
-  initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = null;
-    },
-  },
+  initialState: { user: null, loading: false, error: null },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload.user;
+        state.loading = false;
+        state.user = action.payload;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
+        state.loading = false;
+        state.user = null;
+        state.error = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
       });
   },
 });
 
-export const { logout } = userSlice.actions;
 export default userSlice.reducer;

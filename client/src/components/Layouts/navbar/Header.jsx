@@ -3,13 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "/assets/logo/logo.png";
 import "../../../styles/HeaderStyle.css";
 import { useState, useEffect } from "react";
-import ProfileHeaderButton from "./AuthNav";
+import { useSelector, useDispatch } from "react-redux";
+import ProfileNavBtn from "./ProfileNavBtn";
 import CartBtn from "./CartDropdown";
+import { fetchUserData } from "../../../store/userSlice";
 
 export default function Header() {
   const [nav, setNav] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const { user, loading } = useSelector((state) => state.user);
   const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
   useEffect(() => {
     const changeValueOnScroll = () => {
@@ -20,26 +29,11 @@ export default function Header() {
   }, []);
 
   const links = [
-    {
-      title: "HOME",
-      link: "#hero",
-    },
-    {
-      title: "About",
-      link: "#about",
-    },
-    {
-      title: "Menu",
-      link: "#menu",
-    },
-    {
-      title: "Blog",
-      link: "#blog",
-    },
-    {
-      title: "Contact",
-      link: "#contact",
-    },
+    { title: "HOME", link: "#hero" },
+    { title: "About", link: "#about" },
+    { title: "Menu", link: "#menu" },
+    { title: "Blog", link: "#blog" },
+    { title: "Contact", link: "#contact" },
   ];
 
   return (
@@ -57,9 +51,23 @@ export default function Header() {
         {/* RIGHT SIDE (Mobile) */}
         <div className="d-flex align-items-center d-lg-none ms-auto gap-3">
           <div className="me-2 d-flex gap-3 justify-content-center align-items-center">
-            {/* Profile */}
-            <ProfileHeaderButton />
-            <CartBtn />
+            {loading ? (
+              <div style={{ minWidth: "40px" }}></div>
+            ) : user ? (
+              <>
+                <ProfileNavBtn user={user} />
+                <CartBtn />
+              </>
+            ) : (
+              isHomePage && (
+                <button
+                  className="btn btn_yellow"
+                  onClick={() => (window.location.href = "/login")}
+                >
+                  Login / Signup
+                </button>
+              )
+            )}
           </div>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         </div>
@@ -77,10 +85,23 @@ export default function Header() {
 
           {/* For Desktop */}
           <div className="d-none d-lg-flex ms-lg-3 gap-4 align-items-center justify-content-center">
-            {/* Profile */}
-            <ProfileHeaderButton />
-            {/* Cart */}
-            <CartBtn />
+            {loading ? (
+              <div style={{ minWidth: "40px" }}></div>
+            ) : user ? (
+              <>
+                <ProfileNavBtn user={user} />
+                <CartBtn />
+              </>
+            ) : (
+              isHomePage && (
+                <button
+                  className="btn btn_yellow"
+                  onClick={() => (window.location.href = "/login")}
+                >
+                  Login / Signup
+                </button>
+              )
+            )}
           </div>
         </Navbar.Collapse>
       </Navbar>

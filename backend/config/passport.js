@@ -1,13 +1,13 @@
-// config/passport.js
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/User");
 
-// serialize/deserialize required for passport session
+// Serialize user to session
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+// Deserialize user from session
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
@@ -18,29 +18,33 @@ passport.deserializeUser(async (id, done) => {
 });
 
 /**
- * Helper used by both strategies:
- * - If a user with providerId exists -> return it.
- * - Else if a user with same email exists -> link provider to that user.
- * - Else create a new user with provider info.
+ * Handles OAuth user logic:
+ * 1. If user exists by Google ID -> return it
+ * 2. If user exists by email -> link Google ID + keep existing profilePic if set
+ * 3. Otherwise create a new user with Google data
  */
 async function handleOAuth(profile) {
   const providerIdField = "googleId";
   const providerId = profile.id;
   const email = profile.emails?.[0]?.value || null;
   const name = profile.displayName || "";
-  const photo = profile.photos?.[0]?.value || "";
+  const photo = profile.photos?.[0]?.value
+    ? profile.photos[0].value.replace("s96-c", "s400-c") // higher resolution
+    : "";
 
-  // 1) Try find by provider id
+  // 1) Find by Google ID
   let user = await User.findOne({ [providerIdField]: providerId });
   if (user) return user;
 
-  // 2) Try find by email -> link provider id
+  // 2) Find by email and link Google ID
   if (email) {
     user = await User.findOne({ email });
     if (user) {
       user[providerIdField] = providerId;
-      user.profilePic = user.profilePic || photo;
-      user.isVerified = true; // OAuth email considered verified
+      if (!user.profilePic || user.profilePic === "/images/default-avatar.webp") {
+        user.profilePic = photo;
+      }
+      user.isVerified = true; // Email verified via Google
       await user.save();
       return user;
     }
@@ -50,7 +54,7 @@ async function handleOAuth(profile) {
   user = await User.create({
     name,
     email,
-    profilePic: photo,
+    profilePic: photo || "/images/default-avatar.webp",
     isVerified: true,
     [providerIdField]: providerId,
   });
@@ -58,7 +62,7 @@ async function handleOAuth(profile) {
   return user;
 }
 
-// Google Strategy
+// Configure Google OAuth strategy
 passport.use(
   new GoogleStrategy(
     {

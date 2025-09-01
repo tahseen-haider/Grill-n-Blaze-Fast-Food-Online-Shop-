@@ -5,7 +5,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 /**
- * GET all cart items for the logged-in user
+ * GET /api/cart
+ * Get all cart items for the logged-in user
  */
 router.get("/", authMiddleware, async (req, res) => {
   try {
@@ -19,34 +20,31 @@ router.get("/", authMiddleware, async (req, res) => {
 });
 
 /**
- * Add an item to the cart
+ * POST /api/cart/add
+ * Add an item to the cart or increment quantity if exists
  */
-router.post("/addToCart", authMiddleware, async (req, res) => {
+router.post("/add", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
     const { productId, title, price, rating, image, quantity = 1 } = req.body;
-    
+
     if (!productId || !title || !price) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-    
-    // Check if item already exists for the user
+
     let cartItem = await CartItem.findOne({ productId, userId });
-    
     if (cartItem) {
-      // If item exists, update quantity
       cartItem.quantity += quantity;
       await cartItem.save();
     } else {
-      // Add new item
       cartItem = await CartItem.create({
         productId,
         userId,
         title,
         price,
         rating,
+        image,
         quantity,
-        image
       });
     }
 
@@ -58,27 +56,51 @@ router.post("/addToCart", authMiddleware, async (req, res) => {
 });
 
 /**
- * Remove an item from the cart
+ * PUT /api/cart/update/:id
+ * Update quantity of a specific cart item
  */
-router.delete("/cart/:id", authMiddleware, async (req, res) => {
+router.put("/update/:id", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
+    const { quantity } = req.body;
 
-    const deletedItem = await CartItem.findOneAndDelete({ _id: id, userId });
-    if (!deletedItem) return res.status(404).json({ error: "Item not found" });
+    if (quantity < 1) {
+      return res.status(400).json({ error: "Quantity must be at least 1" });
+    }
 
-    return res.json({ msg: "Item removed from cart" });
+    const updatedItem = await CartItem.findOneAndUpdate(
+      { _id: id, userId },
+      { quantity },
+      { new: true }
+    );
+
+    if (!updatedItem) return res.status(404).json({ error: "Item not found" });
+
+    return res.json({ msg: "Cart item updated", updatedItem });
   } catch (err) {
-    console.error("Remove Cart Item Error:", err);
-    return res.status(500).json({ error: "Failed to remove item" });
+    console.error("Update Cart Item Error:", err);
+    return res.status(500).json({ error: "Failed to update item" });
   }
 });
 
 /**
- * Clear all items in the cart for the user
+ * DELETE /api/cart/:id
+ * Remove a single item from the cart
  */
-router.delete("/cart", authMiddleware, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  const deletedItem = await CartItem.findOneAndDelete({ _id: id, userId });
+  if (!deletedItem) return res.status(404).json({ error: "Item not found" });
+  return res.json({ msg: "Item removed from cart", id: deletedItem._id });
+});
+
+/**
+ * DELETE /api/cart
+ * Clear all items in the user's cart
+ */
+router.delete("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
     await CartItem.deleteMany({ userId });

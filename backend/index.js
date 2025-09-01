@@ -46,7 +46,6 @@ app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/oauth", require("./routes/oauth.route"));
 app.use("/api/user", require("./routes/user.route"));
 app.use("/api/cart", require("./routes/cart.route"));
-app.use("/api/products", require("./routes/products.route"));
 
 const PORT = process.env.PORT || 5000;
 // Connect DB

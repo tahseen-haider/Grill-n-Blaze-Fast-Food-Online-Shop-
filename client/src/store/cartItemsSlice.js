@@ -1,24 +1,57 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Async thunk to fetch cart items from backend
+// ✅ Fetch cart items
 export const fetchCartItems = createAsyncThunk(
   "cartItems/fetchCartItems",
   async () => {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/cart`, {
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error("Failed to fetch cart items");
+    return await res.json();
+  }
+);
+
+// ✅ Remove or decrement item
+export const removeCartItem = createAsyncThunk(
+  "cartItems/removeCartItem",
+  async ({ _id }, { getState }) => {
+    const state = getState();
+    const item = state.cartItems.items.find((i) => i._id === _id);
+
+    if (item && item.quantity > 1) {
+      // ✅ Decrement quantity
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/cart/update/${_id}`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity: item.quantity - 1 }),
+        }
+      );
+      if (!res.ok) throw new Error("Failed to update cart item");
+      const data = await res.json();
+      return data.updatedItem;
+    }
+
+    // ✅ Always send DELETE if item doesn't exist or quantity === 1
     const res = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/api/products/cart`,
+      `${import.meta.env.VITE_SERVER_URL}/api/cart/${_id}`,
       {
-        credentials: "include", // ✅ Important
+        method: "DELETE",
+        credentials: "include",
       }
     );
-    if (!res.ok) throw new Error("Failed to fetch cart items");
+    if (!res.ok) throw new Error("Failed to remove cart item");
     const data = await res.json();
-    return data;
+    return { id: data.id || _id };
   }
 );
 
 const initialState = {
   items: [],
-  status: "idle", // idle | loading | succeeded | failed
+  status: "idle",
   error: null,
 };
 
@@ -27,24 +60,40 @@ const cartItemsSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.items.push(action.payload);
+      const existing = state.items.find(
+        (i) => i.productId === action.payload.productId
+      );
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        state.items.push(action.payload);
+      }
+    },
+    removeItem: (state, action) => {
+      const { _id } = action.payload;
+      const item = state.items.find((i) => i._id === _id);
+      if (item) {
+        if (item.quantity > 1) item.quantity -= 1;
+        else state.items = state.items.filter((i) => i._id !== _id);
+      }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCartItems.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.items = action.payload;
+        state.items = action.payload; // ✅ Replace with backend data
       })
-      .addCase(fetchCartItems.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
+      .addCase(removeCartItem.fulfilled, (state, action) => {
+        const payload = action.payload;
+        if (payload._id) {
+          const idx = state.items.findIndex((i) => i._id === payload._id);
+          if (idx >= 0) state.items[idx] = payload;
+        } else if (payload.id) {
+          state.items = state.items.filter((i) => i._id !== payload.id);
+        }
       });
   },
 });
 
-export const { addToCart } = cartItemsSlice.actions;
+export const { addToCart, removeItem } = cartItemsSlice.actions;
 export default cartItemsSlice.reducer;

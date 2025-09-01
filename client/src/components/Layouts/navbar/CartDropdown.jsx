@@ -1,28 +1,29 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeCartItem, removeItem } from "../../../store/cartItemsSlice";
 
 export default function CartDropdown() {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems.items);
 
-  // Calculate totals
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
+  const handleRemove = (item) => {
+    dispatch(removeItem({ _id: item._id }));
+    dispatch(removeCartItem({ _id: item._id }));
+  };
+
   return (
     <div className="dropdown cart-dropdown">
-      {/* Cart Icon Button */}
       <button
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
         className="border-0 bg-transparent p-0 d-flex justify-content-center align-items-center"
-        style={{
-          width: "45px",
-          height: "45px",
-          borderRadius: "50%",
-        }}
+        style={{ width: "45px", height: "45px", borderRadius: "50%" }}
       >
         <div className="cart position-relative">
           <i className="bi bi-cart2 fs-5" />
@@ -35,27 +36,25 @@ export default function CartDropdown() {
         </div>
       </button>
 
-      {/* Dropdown Menu */}
       <div
         className="dropdown-menu dropdown-menu-end shadow-lg mt-2 p-0"
         style={{ width: "300px" }}
       >
         {cartItems.length > 0 ? (
           <>
-            {/* Scrollable List */}
             <div
-              style={{
-                maxHeight: "250px",
-                overflowY: "auto",
-                padding: "10px",
-              }}
+              style={{ maxHeight: "250px", overflowY: "auto", padding: "10px" }}
             >
-              {cartItems.map((item, idx) => (
+              {cartItems.map((item) => (
                 <div
-                  key={idx}
-                  className="dropdown-item d-flex align-items-center justify-content-between py-2"
+                  key={item.productId}
+                  className="d-flex align-items-center justify-content-between py-2"
+                  style={{
+                    padding: "6px 0",
+                    borderBottom: "1px solid #f1f1f1",
+                    cursor: "default", // no click highlight
+                  }}
                 >
-                  {/* Left: Image + Info */}
                   <div className="d-flex align-items-center">
                     <img
                       src={item.image}
@@ -80,10 +79,22 @@ export default function CartDropdown() {
                     </div>
                   </div>
 
-                  {/* Right: Remove Button */}
                   <button
-                    className="btn btn-sm p-0 border-0"
-                    style={{ lineHeight: 1 }}
+                    className="btn p-1 border-0 rounded-circle"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemove(item);
+                    }}
+                    style={{
+                      backgroundColor: "transparent",
+                      transition: "background 0.2s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#f8f9fa")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
                   >
                     <img
                       src="/icons/trash.svg"
@@ -95,7 +106,6 @@ export default function CartDropdown() {
               ))}
             </div>
 
-            {/* Fixed Footer Section */}
             <div
               style={{
                 borderTop: "1px solid #ddd",

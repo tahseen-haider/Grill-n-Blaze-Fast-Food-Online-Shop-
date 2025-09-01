@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Burger from "/assets/hero/hero-2.png";
-import { Link } from "react-router-dom";
+import AddToCartBtn from "../../components/AddToCartBtn";
 
 export default function Section1() {
   return (
@@ -28,9 +28,15 @@ export default function Section1() {
                 smoky sauce. Served hot with crispy fries—get yours now and
                 taste the flavor explosion!
               </p>
-              <Link to="/" className="btn order_now">
-                Order Now
-              </Link>
+              <AddToCartBtn
+                className={"order_now"}
+                id={"special-burger"}
+                image={Burger}
+                title={"Special Burger"}
+                price={600}
+                rating={5}
+                text={"ORDER NOW"}
+              />
             </div>
           </Col>
         </Row>
