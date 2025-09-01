@@ -19,11 +19,14 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
-      return res.status(400).json({ msg: "Name, email, and password are required" });
+      return res
+        .status(400)
+        .json({ msg: "Name, email, and password are required" });
     }
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ msg: "User already exists" });
+    if (existingUser)
+      return res.status(400).json({ msg: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -69,7 +72,9 @@ router.get("/verify-email/:token", async (req, res) => {
 
     return res.json({ msg: "Email verified successfully" });
   } catch (err) {
-    return res.status(400).json({ msg: "Invalid or expired verification token" });
+    return res
+      .status(400)
+      .json({ msg: "Invalid or expired verification token" });
   }
 });
 
@@ -116,6 +121,7 @@ router.post("/logout", (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    path: "/", // ✅ Required to match original cookie
   });
   return res.status(200).json({ msg: "Logged out successfully" });
 });
@@ -130,10 +136,15 @@ router.post("/forgot-password", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user)
-      return res.status(200).json({ msg: "If that email exists, we sent a reset link" });
+      return res
+        .status(200)
+        .json({ msg: "If that email exists, we sent a reset link" });
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
     user.resetToken = hashedToken;
     user.resetTokenExpire = Date.now() + 60 * 60 * 1000; // 1 hour

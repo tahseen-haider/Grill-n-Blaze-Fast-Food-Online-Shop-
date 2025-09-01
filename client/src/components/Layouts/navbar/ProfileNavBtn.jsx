@@ -5,8 +5,8 @@ import { logoutUser } from "../../../store/userSlice";
 export default function ProfileNavBtn({ user }) {
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
     window.location.href = "/";
   };
 
