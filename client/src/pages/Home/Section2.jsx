@@ -1,5 +1,4 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import Pizza from '/assets/about/pizza.png'
 import Salad from '/assets/about/salad.png'
 import Delivery from '/assets/about/delivery-bike.png'
@@ -38,9 +37,9 @@ export default function Section2() {
               Gather around and indulge in our mouthwatering burgers, crafted with the freshest ingredients and bursting with flavor. 
               Whether you like it classic, spicy, or loaded, every bite is a moment to savor with your loved ones.
               </p>
-              <Link to="/" className="btn order_now btn_red">
+              <a href="#menu" className="btn order_now btn_red">
                 Explore Full Menu
-              </Link>
+              </a>
             </Col>
           </Row>
         </Container>

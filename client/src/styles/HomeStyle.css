@@ -319,7 +319,7 @@
   background: url("../assets/blog/reviews.jpg") no-repeat center center;
   background-size: cover;
   background-attachment: fixed;
-  height: calc(100vh - 130px);
+  /* height: calc(100vh - 130px); */
 }
 
 .review-section .user-img img {

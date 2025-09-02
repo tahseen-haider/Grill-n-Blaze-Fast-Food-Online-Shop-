@@ -11,7 +11,6 @@ export default function Cards({
   price,
   renderRatingIcons,
 }) {
-
   return (
     <Col sm={6} lg={4} xl={3}>
       <Card className="overflow-hidden">
@@ -21,9 +20,6 @@ export default function Cards({
         <Card.Body>
           <div className="d-flex align-items-center justify-content-between">
             <div className="item-rating">{renderRatingIcons(rating)}</div>
-            <div className="wishlist">
-              <i className="bi bi-bookmark-heart"></i>
-            </div>
           </div>
 
           <Card.Title>{title}</Card.Title>

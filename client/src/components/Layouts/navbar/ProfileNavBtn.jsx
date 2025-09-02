@@ -10,6 +10,7 @@ export default function ProfileNavBtn({ user }) {
     window.location.href = "/";
   };
 
+  console.log(user.profilePic);
   return (
     <div className="dropdown">
       <button
@@ -19,7 +20,10 @@ export default function ProfileNavBtn({ user }) {
         className="border-0 bg-transparent p-0"
       >
         <img
-          src={user?.profilePic || "/images/default-avatar.webp"}
+          referrerPolicy="no-referrer"
+          src={
+            user?.profilePic ? user.profilePic : "/images/default-avatar.webp"
+          }
           alt="Profile"
           style={{
             width: "40px",
