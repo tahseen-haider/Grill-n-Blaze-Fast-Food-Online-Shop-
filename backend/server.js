@@ -8,12 +8,12 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-// parse
+// ✅ parse first (do NOT parse raw stripe webhook here)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS
+// ✅ CORS
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-// Sessions
+// ✅ Sessions
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -34,21 +34,25 @@ app.use(
   })
 );
 
-// passport
+// ✅ Passport
 const passport = require("./config/passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
+// ✅ Routes (normal)
 app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/oauth", require("./routes/oauth.route"));
 app.use("/api/user", require("./routes/user.route"));
 app.use("/api/cart", require("./routes/cart.route"));
+app.use("/api/orders", require("./routes/orders.route"));
 
-// ✅ Export the app for Vercel
+// ✅ Stripe webhook route comes LAST
+app.use("/api/stripe", require("./routes/stripeWebhook.route"));
+
+// ✅ Export for Vercel
 module.exports = app;
 
-// ✅ Local server start only in development
+// ✅ Local start
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 5000;
   connectDB()
