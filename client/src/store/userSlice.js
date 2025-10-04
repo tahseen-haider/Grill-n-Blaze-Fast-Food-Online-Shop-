@@ -26,7 +26,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { user: null, loading: false, error: null },
+  initialState: { user: null, loading: false, error: null, initialized: false },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -36,14 +36,17 @@ const userSlice = createSlice({
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.initialized = true; // ✅ user fetch done
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
         state.error = action.payload;
+        state.initialized = true; // ✅ user fetch attempted, even if failed
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
+        state.initialized = true;
       });
   },
 });

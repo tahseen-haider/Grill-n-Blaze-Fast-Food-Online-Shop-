@@ -16,7 +16,6 @@ export default function AddToCartBtn({
   const handleAddToCart = async () => {
     const item = { productId: id, image, title, price, rating, quantity: 1 };
 
-    // ✅ Optimistic update
     dispatch(addToCart(item));
 
     try {
@@ -32,11 +31,9 @@ export default function AddToCartBtn({
 
       if (!res.ok) throw new Error("Failed to add item");
 
-      // ✅ Sync with backend
       dispatch(fetchCartItems());
     } catch (error) {
       console.error(error);
-      // ❌ Rollback
       dispatch(fetchCartItems());
     }
   };

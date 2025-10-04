@@ -120,7 +120,6 @@ a {
 }
 .btn_yellow:hover,
 .btn_yellow:focus{
-    color: var(--light-black);
-    background: transparent;
-    border-color: var(--light-black);
+    background-color: #ecb82a;
+    border-color: black;
 }

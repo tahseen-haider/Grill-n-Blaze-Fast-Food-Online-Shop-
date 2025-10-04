@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeCartItem, removeItem } from "../../../store/cartItemsSlice";
+import { Link } from "react-router-dom";
 
 export default function CartDropdown() {
   const dispatch = useDispatch();
@@ -117,9 +118,9 @@ export default function CartDropdown() {
                 <span>Total:</span>
                 <span>{totalPrice}/-</span>
               </div>
-              <button className="dropdown-item bg-primary text-white rounded text-center fw-bold">
+              <Link to="/checkout" className="dropdown-item bg-primary text-white rounded text-center fw-bold">
                 Checkout
-              </button>
+              </Link>
             </div>
           </>
         ) : (
