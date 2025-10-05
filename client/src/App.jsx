@@ -15,6 +15,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import Checkout from "./pages/Checkout";
 import PublicRoute from "./components/PublicRoutes";
+import OrdersPage from "./pages/OrdersPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<OrdersPage />} />
           </Route>
         </Routes>
       </Layout>

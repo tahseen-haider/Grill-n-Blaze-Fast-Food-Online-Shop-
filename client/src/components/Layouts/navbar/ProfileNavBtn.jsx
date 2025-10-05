@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../store/userSlice";
+import {Link} from "react-router-dom"
 
 export default function ProfileNavBtn({ user }) {
   const dispatch = useDispatch();
@@ -43,6 +44,14 @@ export default function ProfileNavBtn({ user }) {
             <div className="dropdown-item text-secondary fs-7">
               {user?.email || "user@email.com"}
             </div>
+          </li>
+          <li className="mt-4">
+            <Link
+              to="/orders"
+              className="dropdown-item bg-primary text-white rounded"
+            >
+              My Orders
+            </Link>
           </li>
           <li>
             <button

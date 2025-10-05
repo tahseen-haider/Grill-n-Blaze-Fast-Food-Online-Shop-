@@ -67,7 +67,7 @@ export default function Checkout() {
       // ✅ COD Redirect
       if (formData.paymentMethod === "cod") {
         dispatch(fetchCartItems()); // ✅ refetch cart after clearing on server
-        navigate("/success");
+        navigate("/orders");
       }
 
       // 💳 Stripe Redirect
