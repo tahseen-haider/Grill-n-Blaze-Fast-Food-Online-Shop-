@@ -26,7 +26,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { user: null, loading: false, error: null, initialized: false },
+  initialState: { user: null, loading: true, error: null, initialized: false },
   reducers: {},
   extraReducers: (builder) => {
     builder
